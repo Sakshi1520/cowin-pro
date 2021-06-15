@@ -80,6 +80,13 @@ router.get('/allUsers', async (req,res) => {
     }
 })
 
+// get user by id
+router.get('/:id', async(req,res) => {
+    var user = await User.findById(req.params.id);
+    res.send(user)
+})
+
+// register new user
 router.post('/register', async(req,res) => {
 
         console.log("HI")
