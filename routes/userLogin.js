@@ -7,6 +7,7 @@ var accountSid = process.env.TWILIO_ACCOUNT_SID; // Your Account SID from www.tw
 var authToken = process.env.TWILIO_AUTH_TOKEN;   // Your Auth Token from www.twilio.com/console
 const client = require('twilio')(accountSid, authToken)
 
+// send OTP to the user
 router.get('/login', (req,res) => {
     client
     .verify
@@ -21,6 +22,8 @@ router.get('/login', (req,res) => {
     })
 })
 
+// Verify OTP given by user
+// Save in db if new user
 router.post('/verify', (req,res) => {
     client
     .verify
@@ -33,15 +36,11 @@ router.post('/verify', (req,res) => {
     .then((data) => {
         if(data.status === 'approved'){
             // console.log("approved bitch")
-            var resSend = {
-                'isValidOTP': false,
-                'isRegisteredUser' : false
-            }
+
             User.findOne({phno: data.to}, async function(err, user){
                 if(err) {
                   console.log(err);
                 }
-            // console.log(req.body.phno)
             // console.log(data)
 
                 var message;
@@ -54,7 +53,6 @@ router.post('/verify', (req,res) => {
                 else {
                     message= "user doesn't exist";
                     console.log(message)
-
                     const user = new User({
                         phno: data.to
                     });
@@ -62,7 +60,6 @@ router.post('/verify', (req,res) => {
                         console.log(results._id);
                     });
                     res.status(200).send({isValidOTP:true , isRegisteredUser: false})
-
                 }
             });
         }
@@ -72,7 +69,8 @@ router.post('/verify', (req,res) => {
     })
 })
 
-router.get('/', async (req,res) => {
+//View all users
+router.get('/allUsers', async (req,res) => {
     try{
         const users = await User.find()
         res.json(users)
@@ -80,6 +78,33 @@ router.get('/', async (req,res) => {
     catch(err){
         res.status(500).json({ message: err.message})
     }
+})
+
+router.post('/register', async(req,res) => {
+
+        console.log("HI")
+        console.log(req.body)
+        // console.log(req.query.id)
+        let update = {
+            photoIdType: req.body.photoIdType,
+            photoIdNumber: req.body.photoIdNumber,
+            name : req.body.name,
+            gender : req.body.gender,
+            birthYear : req.body.birthYear
+        }
+        
+        await User.findByIdAndUpdate(req.query.id, update,{new: true}, function(err,docs){
+            if (err){
+                console.log(err)
+                res.status(200).send({message: err.message})
+
+            }
+            else{
+                console.log("Updated User : ", docs);
+                res.send(docs)
+            }
+        })
+ 
 })
 
 module.exports = router
