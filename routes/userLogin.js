@@ -21,7 +21,7 @@ router.get('/login', (req,res) => {
     })
 })
 
-router.get('/verify', (req,res) => {
+router.post('/verify', (req,res) => {
     client
     .verify
     .services(process.env.TWILIO_SERVICE_SID)
@@ -32,95 +32,54 @@ router.get('/verify', (req,res) => {
     })
     .then((data) => {
         if(data.status === 'approved'){
-            
-            console.log("approved bitch")
-            // User.findOne({phno: req.query.phno}, async function(err, user){
-            //     if(err) {
-            //       console.log(err);
-            //     }
-            //     var message;
-            //     if(user) {
-            //       console.log(user)
-            //         message = "user exists";
-            //         console.log(message)
-            //     } else {
-            //         message= "user doesn't exist";
-            //         console.log(message)
+            // console.log("approved bitch")
+            var resSend = {
+                'isValidOTP': false,
+                'isRegisteredUser' : false
+            }
+            User.findOne({phno: data.to}, async function(err, user){
+                if(err) {
+                  console.log(err);
+                }
+            // console.log(req.body.phno)
+            // console.log(data)
 
-            //         const user = new User({
-            //             phno: data.to
-            //         })
-            //         try{
-            //             const newUser =  await user.save()
-            //             res.status(201).json(newUser)
-            //         }
-            //         catch(err){
-            //             res.status(500).json({message:err.message})
-            //         }
-                
-            //     }
-            // });
+                var message;
+                if(user) {
+                    console.log(user)
+                    res.status(200).send({isValidOTP:true , isRegisteredUser: true})
+                    // message = "user exists";
+                    // console.log(message)
+                } 
+                else {
+                    message= "user doesn't exist";
+                    console.log(message)
+
+                    const user = new User({
+                        phno: data.to
+                    });
+                    user.save(function (err, results) {
+                        console.log(results._id);
+                    });
+                    res.status(200).send({isValidOTP:true , isRegisteredUser: false})
+
+                }
+            });
         }
-        res.status(200).send(data)
-
+        else{
+            res.status(200).send({isValidOTP:false})
+        }
     })
 })
 
-signInUser = async (data) => {
-console.log('aagaya')
-    User.findOne({phno: data.to}, function(err, user){
-        if(err) {
-          console.log(err);
-        }
-        var message;
-        if(user) {
-            console.log(user)
-            message = "user exists";
-            console.log(message)
-        } else {
-            message= "user doesn't exist";
-            console.log(message)
-        }
-    });
-
-    const user = new User({
-        phno: data.to
-    })
-
-    user.save(function(err) {
-        console.log('this is the problem' + ' ' + err)
-        if (err) {
-            // return res.redirect('/failpage')
-        }
-
-
-        // req.logIn(user, function(err) {
-        //     if (err) {
-        //         console.log(err);
-        //     }
-        //     console.log('all looks good')
-        //     // res.redirect('/results');
-        // });
-    });
-
-}
-
-router.get('/usercheck', function(req, res) {
-    User.findOne({username: req.query.username}, function(err, user){
-        if(err) {
-          console.log(err);
-        }
-        var message;
-        if(user) {
-          console.log(user)
-            message = "user exists";
-            console.log(message)
-        } else {
-            message= "user doesn't exist";
-            console.log(message)
-        }
-        res.json({message: message});
-    });
-});
+router.get('/', async (req,res) => {
+    try{
+        const users = await User.find()
+        res.json(users)
+    }
+    catch(err){
+        res.status(500).json({ message: err.message})
+    }
+})
 
 module.exports = router
