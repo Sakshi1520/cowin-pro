@@ -46,7 +46,7 @@ router.post('/verify', (req,res) => {
                 var message;
                 if(user) {
                     console.log(user)
-                    res.status(200).send({isValidOTP:true , isRegisteredUser: true})
+                    res.status(200).send({isValidOTP:true , isRegisteredUser: true, _id:user._id})
                     // message = "user exists";
                     // console.log(message)
                 } 
@@ -57,9 +57,9 @@ router.post('/verify', (req,res) => {
                         phno: data.to
                     });
                     user.save(function (err, results) {
-                        console.log(results._id);
+                        // console.log(results._id);
+                        res.status(200).send({isValidOTP:true , isRegisteredUser: false, _id:results._id})
                     });
-                    res.status(200).send({isValidOTP:true , isRegisteredUser: false})
                 }
             });
         }
@@ -107,7 +107,7 @@ router.post('/register', async(req,res) => {
 
             }
             else{
-                console.log("Updated User : ", docs);
+                // console.log("Updated User : ", docs);
                 res.send(docs)
             }
         })

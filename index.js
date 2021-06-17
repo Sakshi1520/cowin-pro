@@ -16,6 +16,9 @@ app.use(bodyParser.urlencoded({extended: true}))
 const userRouter = require('./routes/userLogin')
 app.use('/user',userRouter)
 
+const vaccinatorRouter = require('./routes/vaccinatorLogin')
+app.use('/vaccinator',vaccinatorRouter)
+
 
 app.listen(3000, () => console.log('Server started!'))
 
