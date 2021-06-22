@@ -1,6 +1,7 @@
 const express = require('express')
 require('dotenv').config()
 const router = express.Router()
+const mongoose = require('mongoose')
 const Vaccinator = require('../model/vaccinatorSchema')
 
 var accountSid = process.env.TWILIO_ACCOUNT_SID; // Your Account SID from www.twilio.com/console
@@ -53,13 +54,21 @@ router.post('/verify', (req,res) => {
                 else {
                     message= "vaccinator doesn't exist";
                     console.log(message)
+                    let _id = mongoose.Types.ObjectId()
                     const vaccinator = new Vaccinator({
-                        phno: data.to
+                        phno: data.to,
+                        _id,
+                        centerId: _id
                     });
                     vaccinator.save(function (err, results) {
-                        vid = results._id
-                        // console.log(results._id);
-                        res.status(200).send({isValidOTP:true , isRegisteredVaccinator: false, _id: vid})
+                        if(err){
+                            res.status(500).send({message: err.message})
+                        }
+                        else{
+                            vid = results._id
+                            // console.log(results._id);
+                            res.status(200).send({isValidOTP:true , isRegisteredVaccinator: false, _id: vid})
+                        }
                     });
                 }
             });
@@ -95,6 +104,7 @@ console.log("HI")
 console.log(req.body)
 // console.log(req.query.id)
 let update = {
+    centerId: req.body.centerId,
     name: req.body.name,
     address: req.body.address,
     state : req.body.state,

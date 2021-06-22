@@ -19,6 +19,11 @@ app.use('/user',userRouter)
 const vaccinatorRouter = require('./routes/vaccinatorLogin')
 app.use('/vaccinator',vaccinatorRouter)
 
+const sessionRouter = require('./routes/sessionAdd')
+app.use('/session',sessionRouter)
+
+const appRouter = require('./routes/appointments')
+app.use('/appointment',appRouter)
 
 app.listen(3000, () => console.log('Server started!'))
 

@@ -1,6 +1,11 @@
 const mongoose = require('mongoose')
 
 const vaccinatorSchema = new mongoose.Schema({
+    // centerId : {
+    //     type: mongoose.Types.ObjectId,
+    //     default: this._id
+    // },
+    centerId: String,
     phno: {
         type: String
     },
@@ -43,7 +48,12 @@ const vaccinatorSchema = new mongoose.Schema({
         enum: [ 'Free', 'Paid' ]
     }
 
-
 })
+
+vaccinatorSchema.virtual('VaccinatorId').get(function() {
+    return this._id;
+});
+
+
 
 module.exports = mongoose.model('Vaccinator', vaccinatorSchema)

@@ -38,19 +38,17 @@ const userSchema = new mongoose.Schema({
         type:String
     },
     dose1Date: {
-        type: Date
+        type: String
     },
     dose2Date: {
-        type: Date
+        type: String
     },
-    appointments: {
-        appointmentId: {type: mongoose.Schema.Types.ObjectId, ref: 'Appointment'}
-    },
-    dateCreated: {
-        type: Date
-    }
-
+    appointmentId: {type: mongoose.Types.ObjectId, ref: 'Appointment'}
 
 })
+
+userSchema.virtual('userId').get(function() {
+    return this._id;
+});
 
 module.exports = mongoose.model('User', userSchema)
