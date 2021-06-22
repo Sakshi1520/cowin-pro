@@ -25,5 +25,7 @@ app.use('/session',sessionRouter)
 const appRouter = require('./routes/appointments')
 app.use('/appointment',appRouter)
 
-app.listen(3000, () => console.log('Server started!'))
+const port = process.env.PORT || 3000
+
+app.listen(port, () => console.log('Server started!'))
 
