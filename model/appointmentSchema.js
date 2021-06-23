@@ -9,7 +9,8 @@ const appointmentSchema = new mongoose.Schema({
     dose: {
         type: Number,
         enum: [1,2]
-    }
+    },
+    date:String
 })
 
 appointmentSchema.virtual('appointmentId').get(function() {
