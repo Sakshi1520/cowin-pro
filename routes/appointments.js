@@ -12,7 +12,8 @@ router.post('/addAppointment', (req, res) => {
         sessionId: req.body.sessionId,
         slot: req.body.slot,
         userId: req.body.userId,
-        dose: req.body.dose
+        dose: req.body.dose,
+        date: req.body.date
     });
     // appointment.user.push(req.body.userId)
     appointment.save(async (err, results) => {
@@ -92,23 +93,24 @@ router.get('/getByCenter/', async(req, res) => {
     // var app = await Appointment.find().where('centerId'.equals(req.body.centerId))
     
     let users = []
-    let appointment1 = await Appointment.find({centerId:req.query.centerId });
+    let appointment = await Appointment.find({centerId:req.query.centerId, date:req.query.date });
 
-    if(appointment1.length === 0){
+    if(appointment.length === 0){
         res.send('No appointments found.')
     }
+    else{
+        let promises =  appointment.map(async(appointment)=>{
+            let user =await  User.find({appointmentId: appointment._id})
+            let finalUser = user[0];
+            let app = appointment._doc;
+            appointment = {...app, ...finalUser._doc}
+            return appointment;
+        });
+    
+        users = await Promise.all(promises);
+        res.send({users})
+    }
 
-    let promises =  appointment1.map(async(appointment)=>{
-       let user =await  User.find({appointmentId: appointment._id})
-       let finalUser = user[0];
-       let app = appointment._doc;
-        appointment = {...app, finalUser}
-        return appointment;
-    });
-
-    users = await Promise.all(promises);
-
-    console.log("MU GSYFGYGF::: ", users);
 
     // let appointment = await Appointment.find({centerId:req.query.centerId },async  function(err, appointment) 
     // {
@@ -132,7 +134,7 @@ router.get('/getByCenter/', async(req, res) => {
 
     // });
     //console.log("USERS:: ", users);
-    res.send({appointment1, users})
+    // res.send({users})
 })
 
 

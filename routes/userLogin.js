@@ -1,5 +1,5 @@
 const express = require('express')
-require('dotenv').config()
+// require('dotenv').config()
 const router = express.Router()
 const User = require('../model/userSchema')
 
