@@ -73,7 +73,7 @@ router.post('/addAppointment', (req, res) => {
                 }, function (err, docs) {
                     if (err) {
                         console.log(err)
-                        res.status(200).send({
+                        res.status(500).send({
                             message: err.message
                         })
 
@@ -108,7 +108,7 @@ router.get('/getByCenter/', async(req, res) => {
         });
     
         users = await Promise.all(promises);
-        res.send({users})
+        res.status(200).send({users})
     }
 
 

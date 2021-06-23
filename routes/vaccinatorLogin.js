@@ -93,7 +93,7 @@ router.get('/allVaccinators', async (req,res) => {
 // get vaccinator by id
 router.get('/:id', async(req,res) => {
     var vaccinator = await Vaccinator.findById(req.params.id);
-    res.send(vaccinator)
+    res.status(200).send(vaccinator)
 })
 
 // register new vaccinator
@@ -121,12 +121,12 @@ let update = {
 await Vaccinator.findByIdAndUpdate(req.query.id, update,{new: true}, function(err,docs){
     if (err){
         console.log(err)
-        res.status(200).send({message: err.message})
+        res.status(500).send({message: err.message})
 
     }
     else{
         // console.log("Updated Vaccinator : ", docs);
-        res.send(docs)
+        res.status(200).send(docs)
     }
 })
 })

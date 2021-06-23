@@ -83,7 +83,7 @@ router.get('/allUsers', async (req,res) => {
 // get user by id
 router.get('/:id', async(req,res) => {
     var user = await User.findById(req.params.id);
-    res.send(user)
+    res.status(200).send(user)
 })
 
 // register new user
@@ -103,12 +103,12 @@ router.post('/register', async(req,res) => {
         await User.findByIdAndUpdate(req.query.id, update,{new: true}, function(err,docs){
             if (err){
                 console.log(err)
-                res.status(200).send({message: err.message})
+                res.status(500).send({message: err.message})
 
             }
             else{
                 // console.log("Updated User : ", docs);
-                res.send(docs)
+                res.status(200).send(docs)
             }
         })
  

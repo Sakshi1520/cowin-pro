@@ -36,7 +36,7 @@ router.post('/addSession', async(req,res) => {
 router.get('/:id', async(req,res) => {
     try{
         var session = await Session.findById(req.params.id);
-        res.send(session)
+        res.status(200).send(session)
     }
     catch(err){
         res.status(500).json({message: err.message})
@@ -46,7 +46,7 @@ router.get('/:id', async(req,res) => {
 //get session by centerID
 router.get('/', async(req,res) => {
     var sessions = await Session.find().where('centerId').equals(req.query.centerId);
-    res.send(sessions)
+    res.status(200).send(sessions)
 });
 
 module.exports = router
