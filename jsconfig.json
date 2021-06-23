@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "checkJs": true,
+    "jsx": "react"
+  },
+  "exclude": [
+    "bower_components",
+    "node_modules",
+    "**/test/",
+    "**/.vscode/",
+    "**/build/"
+  ]
+}
