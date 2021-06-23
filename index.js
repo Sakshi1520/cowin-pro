@@ -1,7 +1,10 @@
 // require('dotenv').config()
 const bodyParser = require('body-parser')
 const express = require('express')
+var cors = require('cors');
 const app = express()
+app.use(cors());
+
 const mongoose = require('mongoose')
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true,  useUnifiedTopology: true })
