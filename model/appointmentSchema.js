@@ -11,7 +11,15 @@ const appointmentSchema = new mongoose.Schema({
         enum: [1,2]
     },
     date:String,
-    isCancelled: false
+    isCancelled: {
+        type: Boolean,
+        default: false
+    },
+    isConfirmed : {
+        type: Boolean,
+        default: false
+    }    
+
 })
 
 appointmentSchema.virtual('appointmentId').get(function() {

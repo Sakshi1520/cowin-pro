@@ -113,6 +113,25 @@ router.get('/getByCenter/', async(req, res) => {
 })
 
 
+router.post('/confirm',async(req,res) => {
+    let update = {
+        isConfirmed : true    
+    }
+    
+    await Appointment.findByIdAndUpdate(req.body.appointmentId, update,{new: true}, function(err,docs){
+        if (err){
+            console.log(err)
+            res.status(200).send({message: err.message})
+
+        }
+        else{
+            // console.log("Updated User : ", docs);
+            res.send(docs)
+        }
+    })
+
+})
+
     // let appointment = await Appointment.find({centerId:req.query.centerId },async  function(err, appointment) 
     // {
     //     if (err)
