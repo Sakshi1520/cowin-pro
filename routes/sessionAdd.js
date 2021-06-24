@@ -37,8 +37,9 @@ router.get('/allSessions', async(req,res) => {
         }
         else{
             let promises =  vaccinator.map(async(vaccinator)=>{
-                let session =await  Session.find()
-                let sessions = session[0];
+                // console.log(vaccinator.centerId)
+                let session = await Session.find({centerId: vaccinator.centerId})
+                let sessions = session;
                 let app = vaccinator._doc;
                 vaccinator = {...app, sessions}
                 return vaccinator;
