@@ -100,7 +100,7 @@ router.post('/register', async(req,res) => {
             birthYear : req.body.birthYear
         }
         
-        await User.findByIdAndUpdate(req.query.id, update,{new: true}, function(err,docs){
+        await User.findByIdAndUpdate(req.body.id, update,{new: true}, function(err,docs){
             if (err){
                 console.log(err)
                 res.status(500).send({message: err.message})
