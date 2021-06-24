@@ -47,7 +47,7 @@ router.post('/verify', (req,res) => {
                 var message,vid;
                 if(vaccinator) {
                     console.log(vaccinator)
-                    res.status(200).send({isValidOTP:true , isRegisteredVaccinator: true, _id: vaccinator._id})
+                    res.status(200).send({isValidOTP:true , isRegisteredVaccinator: true, _id: vaccinator._id, centerId: vaccinator.centerId})
                     // message = "vaccinator exists";
                     // console.log(message)
                 } 
