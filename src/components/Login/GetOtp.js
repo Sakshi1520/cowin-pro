@@ -5,10 +5,16 @@ import { Container, TextField } from "@material-ui/core";
 import useStyles from "styles";
 
 const Keys = {
-  mobileNo: "mobileNumber",
+  mobileNo: "phno",
 };
 
-const GetOtp = ({ handleFormSubmit, customValidator, currentValidators }) => {
+const GetOtp = ({
+  handleFormSubmit,
+  handleChange,
+  formData,
+  customValidator,
+  currentValidators,
+}) => {
   const classes = useStyles();
 
   return (
@@ -32,16 +38,23 @@ const GetOtp = ({ handleFormSubmit, customValidator, currentValidators }) => {
               id={Keys.mobileNo}
               name={Keys.mobileNo}
               placeholder="Enter your mobile number"
+              value={formData[Keys.mobileNo]}
               label="Mobile Number"
               fullWidth
               color="primary"
               margin="normal"
               className={classes.mb3}
-              error={!currentValidators[Keys.mobileNo]}
+              error={
+                currentValidators[Keys.mobileNo] !== undefined
+                  ? !currentValidators[Keys.mobileNo]
+                  : false
+              }
               helperText="Must be 10 digits"
               onChange={(e) => {
+                handleChange(e);
                 customValidator(e, "mobileNumber");
               }}
+              required
             />
             <Button
               type="submit"

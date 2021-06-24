@@ -5,15 +5,21 @@ import { Container, TextField } from "@material-ui/core";
 import useStyles from "styles";
 
 const Keys = {
-  otp: "otp",
+  otp: "code",
 };
 
-const EnterOtp = ({ handleOtpSubmit, customValidator, currentValidators }) => {
+const EnterOtp = ({
+  handleSubmitOtp,
+  handleChange,
+  formData,
+  customValidator,
+  currentValidators,
+}) => {
   const classes = useStyles();
 
   return (
     <>
-      <form onSubmit={handleOtpSubmit}>
+      <form onSubmit={handleSubmitOtp}>
         <Typography
           variant="h5"
           color="primary"
@@ -38,8 +44,10 @@ const EnterOtp = ({ handleOtpSubmit, customValidator, currentValidators }) => {
               margin="normal"
               className={classes.mb3}
               error={!currentValidators[Keys.otp]}
-              helperText="Must be 4 digits"
+              value={formData[Keys.otp]}
+              helperText="Must be 6 digits"
               onChange={(e) => {
+                handleChange(e);
                 customValidator(e, "otp");
               }}
             />

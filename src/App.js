@@ -12,6 +12,7 @@ import {
 import logo from "./assets/cowin_logo.jpg";
 import useStyles from "styles";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
+import { toast, ToastContainer } from "react-toastify";
 
 const loggedIn = true;
 const theme = createMuiTheme({
@@ -57,6 +58,7 @@ function App() {
           </footer>
         </div>
       </ThemeProvider>
+      <ToastContainer autoClose={5000} position={toast.POSITION.BOTTOM_RIGHT} />
     </>
   );
 }

@@ -25,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(3),
     padding: theme.spacing(2),
     [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
-      marginTop: theme.spacing(10),
+      marginTop: theme.spacing(8),
       marginBottom: theme.spacing(6),
       padding: theme.spacing(3),
     },
@@ -62,6 +62,9 @@ const useStyles = makeStyles((theme) => ({
   pd6: {
     padding: theme.spacing(6),
   },
+  w100: {
+    width: "100%",
+  },
   footer: {
     display: "flex",
     position: "fixed",
@@ -73,6 +76,9 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: "#002060",
     color: "white",
     alignContent: "center",
+  },
+  mxAuto: {
+    margin: "0 auto",
   },
 }));
 
