@@ -20,6 +20,7 @@ router.get('/login', (req,res) => {
     .then((data) => {
         res.status(200).send(data)
     })
+    .catch(err => res.status(500).json({message: err.message}))
 })
 
 // Verify OTP given by user
