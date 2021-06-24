@@ -46,7 +46,7 @@ router.get('/allSessions', async(req,res) => {
             });
         
             centers = await Promise.all(promises);
-            res.send({centers})
+            res.send(centers)
         }
     }
     catch(err){
@@ -64,7 +64,7 @@ router.get('/allSessions', async(req,res) => {
 router.get('/:id', async(req,res) => {
     try{
         var session = await Session.findById(req.params.id);
-        res.send(session)
+        res.status(200).send(session)
     }
     catch(err){
         res.status(500).json({message: err.message})

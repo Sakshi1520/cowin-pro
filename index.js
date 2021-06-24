@@ -11,7 +11,7 @@ db.on('error', (error) => console.error(error))
 db.once('open', () => console.log('Connected to the database - Vaccinedb'))
 
 // app.use(express.json())
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.json({extended: true}))
 
 const userRouter = require('./routes/userLogin')
 app.use('/user',userRouter)
@@ -24,6 +24,9 @@ app.use('/session',sessionRouter)
 
 const appRouter = require('./routes/appointments')
 app.use('/appointment',appRouter)
+
+const waitListRouter = require('./routes/waitList')
+app.use('/waitList',waitListRouter)
 
 const port = process.env.PORT || 3000
 

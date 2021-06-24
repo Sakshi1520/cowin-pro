@@ -1,7 +1,7 @@
 const mongoose = require('mongoose')
 
 const waitListSchema = new mongoose.Schema({
-    centerId : String,
+    sessionId : String,
     userId: {type: mongoose.Types.ObjectId, ref: 'User'}
 })
 
