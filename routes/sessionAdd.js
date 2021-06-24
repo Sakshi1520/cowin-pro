@@ -55,6 +55,36 @@ router.get('/allSessions', async(req,res) => {
     }
 })
 
+
+router.get('/filterSession', async(req,res) => {
+    try{
+        let session = []
+        const vaccinator = await Vaccinator.find({pincode: req.body.pincode})
+        if(vaccinator.length === 0){
+            res.send('No Vaccinators found.')
+        }
+        else{
+            let promises =  vaccinator.map(async(vaccinator)=>{
+                // console.log(vaccinator.centerId)
+                let session = await Session.find({centerId: vaccinator.centerId, date:req.body.date})
+                let sessions = session;
+                let app = vaccinator._doc;
+                vaccinator = {...app, sessions}
+                return vaccinator;
+            });
+        
+            centers = await Promise.all(promises);
+            res.send(centers)
+        }
+    }
+    catch(err){
+        console.log(err);
+        res.send.status(500).send({message: err.message})
+    }
+})
+
+
+
 // router.get('/:id', async(req,res) => {
 //     var session = await Session.findById(req.params.id);
 //     res.send(session)
