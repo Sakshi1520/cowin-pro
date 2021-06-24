@@ -93,7 +93,7 @@ router.get('/getByCenter/', async(req, res) => {
     // var app = await Appointment.find().where('centerId'.equals(req.body.centerId))
     
     let users = []
-    let appointment = await Appointment.find({centerId:req.query.centerId, date:req.query.date });
+    let appointment = await Appointment.find({centerId:req.body.centerId, date:req.body.date });
 
     if(appointment.length === 0){
         res.send('No appointments found.')
@@ -137,6 +137,24 @@ router.get('/getByCenter/', async(req, res) => {
     // res.send({users})
 })
 
+router.post('/cancel',async(req,res) => {
+        let update = {
+            isCancelled : true    
+        }
+        
+        await Appointment.findByIdAndUpdate(req.body.appointmentId, update,{new: true}, function(err,docs){
+            if (err){
+                console.log(err)
+                res.status(200).send({message: err.message})
+
+            }
+            else{
+                console.log("Updated User : ", docs);
+                res.send(docs)
+            }
+        })
+ 
+})
 
 // router.get('/getByCenter', async (req, res) => {
 //     console.log(typeof req.query.centerId)

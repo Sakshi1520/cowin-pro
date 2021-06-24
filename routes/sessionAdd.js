@@ -23,7 +23,7 @@ router.post('/addSession', async(req,res) => {
             res.status(500).send({message: err.message})
         }
         else{
-            res.status(200).send({message: "Successful"})
+            res.status(200).send({message: "Successful", id:session._id})
         }
     })
 })
