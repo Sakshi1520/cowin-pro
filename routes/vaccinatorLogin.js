@@ -98,11 +98,9 @@ router.get('/:id', async(req,res) => {
 
 // register new vaccinator
 router.post('/register', async(req,res) => {
-//  console.log(req.query)
-console.log(req.query.id)
-console.log("HI")
-console.log(req.body)
-// console.log(req.query.id)
+// console.log(req.body.id)
+// console.log("HI")
+// console.log(req.body)
 let update = {
     centerId: req.body.centerId,
     name: req.body.name,
@@ -118,7 +116,7 @@ let update = {
     feeType : req.body.feeType
 }
 
-await Vaccinator.findByIdAndUpdate(req.query.id, update,{new: true}, function(err,docs){
+await Vaccinator.findByIdAndUpdate(req.body.id, update,{new: true}, function(err,docs){
     if (err){
         console.log(err)
         res.status(500).send({message: err.message})

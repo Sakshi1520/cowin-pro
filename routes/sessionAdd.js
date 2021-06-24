@@ -23,7 +23,7 @@ router.post('/addSession', async(req,res) => {
             res.status(500).send({message: err.message})
         }
         else{
-            res.status(200).send({message: "Successful"})
+            res.status(200).send({message: "Successful", id:session._id})
         }
     })
 })
@@ -46,7 +46,7 @@ router.get('/allSessions', async(req,res) => {
             });
         
             centers = await Promise.all(promises);
-            res.send({centers})
+            res.send(centers)
         }
     }
     catch(err){
