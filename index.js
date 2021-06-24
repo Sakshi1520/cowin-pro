@@ -2,6 +2,16 @@ require('dotenv').config()
 const bodyParser = require('body-parser')
 const express = require('express')
 const app = express()
+
+const cors = require('cors');
+app.use(express.urlencoded({extended: false}));
+app.use(cors({origin: "*"}));
+
+// app.use((req, res, next) => {
+//     res.header('Access-Control-Allow-Origin', '*');
+//     next();
+//   });
+
 const mongoose = require('mongoose')
 
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true,  useUnifiedTopology: true })
@@ -28,7 +38,8 @@ app.use('/appointment',appRouter)
 const waitListRouter = require('./routes/waitList')
 app.use('/waitList',waitListRouter)
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3001
+
 
 app.listen(port, () => console.log('Server started!'))
 

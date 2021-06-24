@@ -76,7 +76,7 @@ router.get('/:id', async(req,res) => {
 //get session by centerID
 router.get('/', async(req,res) => {
     var sessions = await Session.find().where('centerId').equals(req.query.centerId);
-    res.send(sessions)
+    res.status(200).send(sessions)
 });
 
 
