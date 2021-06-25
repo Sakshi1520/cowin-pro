@@ -14,6 +14,7 @@ const GetOtp = ({
   formData,
   customValidator,
   currentValidators,
+  isVaccinator,
 }) => {
   const classes = useStyles();
 
@@ -26,7 +27,7 @@ const GetOtp = ({
           style={{ fontWeight: 600 }}
           gutterBottom
         >
-          Register or SignIn for Vaccination
+          {!isVaccinator ? "Register or SignIn for Vaccination" : "Welcome"}
         </Typography>
         <Typography gutterBottom>
           An OTP will be sent to your mobile number for verification
@@ -37,7 +38,7 @@ const GetOtp = ({
               type="number"
               id={Keys.mobileNo}
               name={Keys.mobileNo}
-              placeholder="Enter your mobile number"
+              placeholder="Enter YOUR mobile number"
               value={formData[Keys.mobileNo]}
               label="Mobile Number"
               fullWidth

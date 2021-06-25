@@ -5,7 +5,7 @@ import useStyles from "styles";
 import GetOtp from "components/Login/GetOtp";
 import EnterOtp from "components/Login/EnterOtp";
 import { ReactComponent as LoginHeart } from "assets/login_heart.svg";
-import userService from "services/user";
+import vaccinatorService from "services/vaccinator";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
@@ -38,8 +38,7 @@ const Login = () => {
       setOtpSent(true);
       console.log("hello ", formData);
 
-      // eslint-disable-next-line no-unreachable
-      userService
+      vaccinatorService
         .login(formData)
         .then((res) => {})
         .catch((err) => toast.error("OTP could not be sent, Please try again"));
@@ -64,19 +63,16 @@ const Login = () => {
     });
 
     if (isValid()) {
-      userService
+      vaccinatorService
         .verifyOtp(formData)
         .then((res) => {
+          console.log(res);
           if (res.status === 200) {
             if (res.data.isValidOTP) {
-              localStorage.setItem("user", res.data._id);
+              console.log(res.data);
+              //localStorage.setItem("user", res.data._id);
               //store _id in session
-              if (res.data.isRegisteredUser) {
-                history.push("/user/booking");
-              } else {
-                history.push("/register");
-                // history.push("/slotbooking")
-              }
+              // history.push('/vaccinator');
             } else {
               toast.error("Otp is incorrect please re-enter");
             }
@@ -85,6 +81,7 @@ const Login = () => {
           }
         })
         .catch((err) => toast.error("Couldn't please retry"));
+      console.log("verify", formData);
       // setOtpSent(true);
     } else {
       console.error("wrong otp");
@@ -118,6 +115,7 @@ const Login = () => {
             currentValidators={currentValidators}
             handleChange={handleChange}
             formData={formData}
+            isVaccinator={true}
           />
         ) : (
           <EnterOtp
@@ -126,6 +124,7 @@ const Login = () => {
             currentValidators={currentValidators}
             handleChange={handleChange}
             formData={formData}
+            isVaccinator={true}
           />
         )}
       </Paper>

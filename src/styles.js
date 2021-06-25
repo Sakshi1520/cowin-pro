@@ -80,6 +80,50 @@ const useStyles = makeStyles((theme) => ({
   mxAuto: {
     margin: "0 auto",
   },
+  pdy: {
+    padding: "2rem 0",
+    marginBottom: "3rem",
+  },
+  redBg: {
+    backgroundColor: theme.palette.redLight,
+  },
+  greenBg: {
+    backgroundColor: theme.palette.greenLight,
+  },
+  paperTile: {
+    marginTop: theme.spacing(3),
+    marginBottom: theme.spacing(3),
+    padding: theme.spacing(2),
+    [theme.breakpoints.up(600 + theme.spacing(3) * 2)]: {
+      marginTop: theme.spacing(6),
+      marginBottom: theme.spacing(6),
+      padding: theme.spacing(3),
+    },
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+  },
+  tileImage: {
+    width: "100%",
+  },
+  chotaPaper: {
+    backgroundColor: "#c5e2ec",
+    margin: theme.spacing(3),
+    marginTop: "3rem",
+    padding: theme.spacing(2),
+    paddingTop: ".6rem",
+  },
+  alignRowCenter: {
+    display: "flex",
+    alignItems: "center",
+    justifyItems: "end",
+  },
+  btnBook: {
+    // borderColor: "yellow",
+  },
+  btnJoin: {
+    backgroundColor: "#bfa11b2",
+  },
 }));
 
 export default useStyles;

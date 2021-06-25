@@ -14,7 +14,7 @@ import useStyles from "styles";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { toast, ToastContainer } from "react-toastify";
 
-const loggedIn = true;
+const loggedIn = false;
 const theme = createMuiTheme({
   palette: {
     primary: {
@@ -23,6 +23,9 @@ const theme = createMuiTheme({
     secondary: {
       main: "#600000",
     },
+    yellowDark: "#fbbe134",
+    redLight: "#ffb8b8",
+    greenLight: "#b8ffd2",
   },
 });
 function App() {

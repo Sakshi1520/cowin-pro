@@ -30,7 +30,6 @@ const Keys = {
 const RegisterUser = () => {
   const classes = useStyles();
   const [formData, setFormData] = useState({});
-  useEffect(() => {}, []);
   const handleChange = (e) => {
     const { target } = e;
     const { name, value } = target;
@@ -50,6 +49,7 @@ const RegisterUser = () => {
       .registerUser(params)
       .then((res) => {
         console.log(res);
+        history.push("/user/booking");
       })
       .catch((err) => console.log(err));
   };
@@ -66,7 +66,7 @@ const RegisterUser = () => {
           >
             Register for Vaccination
           </Typography>
-          <Typography variant="subtitle2" align="center">
+          <Typography variant="subtitle2" align="center" gutterBottom>
             Your Photo ID will be verified at the time of your vaccination
             appointment. Please provide the details of the Photo Id you will
             carry for vaccination.

@@ -14,6 +14,7 @@ const EnterOtp = ({
   formData,
   customValidator,
   currentValidators,
+  isVaccinator,
 }) => {
   const classes = useStyles();
 
@@ -26,7 +27,7 @@ const EnterOtp = ({
           style={{ fontWeight: 600 }}
           gutterBottom
         >
-          OTP Verification
+          {isVaccinator ? "OTP Verification" : "Welcome!"}
         </Typography>
         <Typography gutterBottom>
           An OTP has been sent to your number
