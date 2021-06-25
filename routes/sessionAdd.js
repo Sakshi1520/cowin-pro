@@ -59,14 +59,14 @@ router.get('/allSessions', async(req,res) => {
 router.get('/filterSession', async(req,res) => {
     try{
         let session = []
-        const vaccinator = await Vaccinator.find({pincode: req.body.pincode})
+        const vaccinator = await Vaccinator.find({pincode: req.query.pincode})
         if(vaccinator.length === 0){
             res.send('No Vaccinators found.')
         }
         else{
             let promises =  vaccinator.map(async(vaccinator)=>{
                 // console.log(vaccinator.centerId)
-                let session = await Session.find({centerId: vaccinator.centerId, date:req.body.date})
+                let session = await Session.find({centerId: vaccinator.centerId, date:req.query.date})
                 let sessions = session;
                 let app = vaccinator._doc;
                 vaccinator = {...app, sessions}
@@ -74,7 +74,7 @@ router.get('/filterSession', async(req,res) => {
             });
         
             centers = await Promise.all(promises);
-            res.send(centers)
+            res.status(200).send({message: "Successful", data: centers});
         }
     }
     catch(err){
